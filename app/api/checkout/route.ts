@@ -11,16 +11,22 @@ type IncomingItem = {
   quantity: number
 }
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "")
-
 export async function POST(req: Request) {
   try {
-    if (!process.env.STRIPE_SECRET_KEY) {
+    const stripeSecretKey = process.env.STRIPE_SECRET_KEY
+
+    if (!stripeSecretKey) {
       return NextResponse.json(
-        { error: "Missing STRIPE_SECRET_KEY in .env.local" },
-        { status: 500 }
+        { error: "Stripe is not configured" },
+        { status: 501 }
       )
     }
+
+    // IMPORTANT:
+    // Stripe must be initialised INSIDE the request handler
+    // so it does not execute during Vercel build
+    const stripe = new Stripe(stripeSecretKey)
+
 
     const baseUrl =
       process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
