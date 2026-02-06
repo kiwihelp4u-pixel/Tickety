@@ -7,11 +7,12 @@ export default function HomePage() {
       <header className="border-b">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
          <Link href="/" className="flex items-center gap-3">
-  <img
-    src="/images/\tickety-logo.png"
-    className="h-16 w-auto"
-    alt="Tickety"
-  />
+ <img
+  src="/images/tickety-logo.png"
+  alt="Tickety"
+  className="h-16 w-auto"
+/>
+
 </Link>
 
 
