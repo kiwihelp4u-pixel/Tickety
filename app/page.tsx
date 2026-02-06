@@ -8,7 +8,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
          <Link href="/" className="flex items-center gap-3">
   <img
-    src="/images/Tickety logo.png"
+    src="/images/\tickety-logo.png"
     className="h-16 w-auto"
     alt="Tickety"
   />
