@@ -1,4 +1,9 @@
-import Link from "next/link"
+import Link from "next/link";
+import HowItWorks from "@/components/HowItWorks";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import WhyTickety from "@/components/WhyTickety";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -6,15 +11,13 @@ export default function HomePage() {
       {/* HEADER */}
       <header className="border-b">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-         <Link href="/" className="flex items-center gap-3">
- <img
-  src="/images/tickety-logo.png"
-  alt="Tickety"
-  className="h-16 w-auto"
-/>
-
-</Link>
-
+          <Link href="/" className="flex items-center gap-3">
+            <img
+              src="/images/tickety-logo.png"
+              alt="Tickety"
+              className="h-16 w-auto"
+            />
+          </Link>
 
           <nav className="hidden md:flex items-center gap-8 text-sm text-gray-700">
             <Link href="/how-it-works">How it works</Link>
@@ -76,54 +79,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center">
-            How Tickety works
-          </h2>
-
-          <p className="text-center text-gray-600 mt-2">
-            Whether you are organising an event or looking for tickets,
-            we have made it straightforward.
-          </p>
-
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-
-              <div className="text-emerald-600 font-bold text-xl">01</div>
-              <h3 className="mt-2 font-semibold text-lg">
-                Create your event
-              </h3>
-              <p className="text-gray-600 mt-2">
-                Add event details, dates, and ticket types in minutes.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-
-              <div className="text-emerald-600 font-bold text-xl">02</div>
-              <h3 className="mt-2 font-semibold text-lg">
-                Set your prices
-              </h3>
-              <p className="text-gray-600 mt-2">
-                Choose your ticket prices. We handle secure payments.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-xl p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-
-              <div className="text-emerald-600 font-bold text-xl">03</div>
-              <h3 className="mt-2 font-semibold text-lg">
-                Get paid
-              </h3>
-              <p className="text-gray-600 mt-2">
-                Funds are deposited directly to your account after the event.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* HOW IT WORKS (WITH TOGGLE) */}
+      <HowItWorks />
 
       {/* WHY CHOOSE */}
       <section className="py-24">
@@ -137,45 +94,21 @@ export default function HomePage() {
           </p>
 
           <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-white">
-
-              <h3 className="font-semibold">Easy event creation</h3>
-              <p className="text-gray-600 mt-2">
-                Create your event page in minutes using a simple form.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-white">
-
-              <h3 className="font-semibold">Simple ticket purchase</h3>
-              <p className="text-gray-600 mt-2">
-                Attendees can buy tickets in just a few clicks.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-white">
-
-              <h3 className="font-semibold">Transparent fees</h3>
-              <p className="text-gray-600 mt-2">
-                No hidden charges. You see exactly what you pay.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-white">
-
-              <h3 className="font-semibold">Mobile-friendly</h3>
-              <p className="text-gray-600 mt-2">
-                Works perfectly on any device.
-              </p>
-            </div>
-
-            <div className="bg-gray-50 rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-white">
-
-              <h3 className="font-semibold">Reliable checkout</h3>
-              <p className="text-gray-600 mt-2">
-                Secure, fast, and dependable payments.
-              </p>
-            </div>
+            {[
+              ["Easy event creation", "Create your event page in minutes using a simple form."],
+              ["Simple ticket purchase", "Attendees can buy tickets in just a few clicks."],
+              ["Transparent fees", "No hidden charges. You see exactly what you pay."],
+              ["Mobile-friendly", "Works perfectly on any device."],
+              ["Reliable checkout", "Secure, fast, and dependable payments."],
+            ].map(([title, desc]) => (
+              <div
+                key={title}
+                className="bg-gray-50 rounded-xl p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-white"
+              >
+                <h3 className="font-semibold">{title}</h3>
+                <p className="text-gray-600 mt-2">{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -198,10 +131,7 @@ export default function HomePage() {
               "Are refunds allowed?",
               "Can I use this for community events?",
             ].map((q) => (
-              <div
-                key={q}
-                className="bg-white border rounded-lg px-4 py-3"
-              >
+              <div key={q} className="bg-white border rounded-lg px-4 py-3">
                 {q}
               </div>
             ))}
@@ -209,7 +139,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/** FOOTER **/}
+      {/* FOOTER */}
       <footer className="border-t py-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
           <div className="flex items-center gap-2">
@@ -218,7 +148,7 @@ export default function HomePage() {
               alt="Tickety"
               className="h-12 w-auto"
             />
-            <span>© 2026 </span>
+            <span>© 2026 Tickety</span>
           </div>
 
           <div className="flex gap-6 mt-4 md:mt-0">
@@ -233,5 +163,5 @@ export default function HomePage() {
         </div>
       </footer>
     </main>
-  )
+  );
 }
