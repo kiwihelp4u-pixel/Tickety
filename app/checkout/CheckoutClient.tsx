@@ -1,159 +1,154 @@
-"use client"
+"use client";
 
-import { useSearchParams } from "next/navigation"
-import { useMemo, useState } from "react"
+import { useSearchParams, useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 type TicketType = {
-  id: string
-  name: string
-  description: string
-  price: number
-  maxPerOrder: number
-  remaining: number
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+};
+
+type EventData = {
+  slug: string;
+  title: string;
+  date: string;
+  location: string;
+  ticket: TicketType;
+};
+
+const EVENTS: EventData[] = [
+  {
+    slug: "auckland-music-night",
+    title: "Auckland Music Night",
+    date: "20 April 2026",
+    location: "Auckland",
+    ticket: {
+      id: "ga",
+      name: "General Admission",
+      description: "Standard entry",
+      price: 25,
+    },
+  },
+  {
+    slug: "wellington-tech-meetup",
+    title: "Wellington Tech Meetup",
+    date: "5 May 2026",
+    location: "Wellington",
+    ticket: {
+      id: "free",
+      name: "Free Ticket",
+      description: "Community event",
+      price: 0,
+    },
+  },
+  {
+    slug: "christchurch-food-festival",
+    title: "Christchurch Food Festival",
+    date: "18 May 2026",
+    location: "Christchurch",
+    ticket: {
+      id: "entry",
+      name: "Entry Pass",
+      description: "Food festival access",
+      price: 15,
+    },
+  },
+];
+
+const BOOKING_FEE = 3.5;
+
+function money(n: number) {
+  return `$${n.toFixed(2)}`;
 }
 
-const BOOKING_FEE = 3.5
-
 export default function CheckoutClient() {
-  const params = useSearchParams()
+  const router = useRouter();
+  const params = useSearchParams();
 
-  const eventTitle = params.get("title") || "Event"
-  const eventDate = params.get("date") || ""
+  const slug = params.get("event") || "";
+  const qty = Number(params.get("qty") || 0);
 
-  const tickets: TicketType[] = useMemo(
-    () => [
-      {
-        id: "ga",
-        name: "General Admission",
-        description: "Standing · All access",
-        price: 79,
-        maxPerOrder: 6,
-        remaining: 120,
-      },
-      {
-        id: "vip",
-        name: "VIP",
-        description: "Early entry · Premium view",
-        price: 149,
-        maxPerOrder: 2,
-        remaining: 30,
-      },
-    ],
-    []
-  )
+  const event = useMemo(
+    () => EVENTS.find((e) => e.slug === slug),
+    [slug]
+  );
 
-  const [quantities, setQuantities] = useState<Record<string, number>>({
-    ga: 1,
-    vip: 0,
-  })
+  // ✅ strict guard
+  if (!event || !Number.isFinite(qty) || qty <= 0) {
+    return (
+      <main className="mx-auto max-w-md p-6">
+        <div className="rounded-xl border bg-white p-6">
+          <h1 className="text-lg font-semibold">Invalid checkout</h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Missing event or quantity.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
-  const subtotal = tickets.reduce(
-    (sum, t) => sum + t.price * (quantities[t.id] || 0),
-    0
-  )
-
-  const totalTickets = Object.values(quantities).reduce(
-    (a, b) => a + b,
-    0
-  )
-
-  const fees = totalTickets > 0 ? BOOKING_FEE : 0
-  const total = subtotal + fees
+  const subtotal = event.ticket.price * qty;
+  const fee = subtotal > 0 ? BOOKING_FEE : 0;
+  const total = subtotal + fee;
+  const isFree = total === 0;
 
   return (
-    <main className="min-h-screen bg-gray-100 flex justify-center">
-      <div className="w-full max-w-md bg-white min-h-screen shadow-sm">
-        <header className="border-b px-5 py-4 space-y-1">
-          <h1 className="text-lg font-semibold">Select tickets</h1>
-          <p className="text-sm text-gray-600">
-            {eventTitle} · {eventDate}
-          </p>
-        </header>
+    <main className="mx-auto max-w-md p-6">
+      <div className="rounded-xl border bg-white p-5">
+        <h1 className="text-lg font-semibold">Review your order</h1>
 
-        <section className="px-5 py-6 space-y-6">
-          {tickets.map((ticket) => {
-            const qty = quantities[ticket.id] || 0
-            const soldOut = ticket.remaining === 0
+        <p className="mt-1 text-sm text-gray-600">
+          {event.title} · {event.date} · {event.location}
+        </p>
 
-            return (
-              <div
-                key={ticket.id}
-                className={`rounded-xl border p-4 space-y-4 ${
-                  soldOut ? "opacity-50" : ""
-                }`}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h2 className="text-base font-semibold">
-                      {ticket.name}
-                    </h2>
-                    <p className="text-sm text-gray-500">
-                      {ticket.description}
-                    </p>
-                  </div>
-
-                  <span className="text-sm font-semibold">
-                    ${ticket.price}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">
-                    Quantity
-                  </span>
-
-                  <div className="flex items-center gap-4">
-                    <button
-                      onClick={() =>
-                        setQuantities((q) => ({
-                          ...q,
-                          [ticket.id]: Math.max(q[ticket.id] - 1, 0),
-                        }))
-                      }
-                      className="h-9 w-9 rounded-full border text-lg"
-                    >
-                      −
-                    </button>
-
-                    <span className="text-sm font-medium w-4 text-center">
-                      {qty}
-                    </span>
-
-                    <button
-                      onClick={() =>
-                        setQuantities((q) => ({
-                          ...q,
-                          [ticket.id]: q[ticket.id] + 1,
-                        }))
-                      }
-                      className="h-9 w-9 rounded-full border text-lg"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
+        <div className="mt-4 rounded-lg border p-4">
+          <div className="flex justify-between">
+            <div>
+              <div className="font-semibold">{event.ticket.name}</div>
+              <div className="text-sm text-gray-600">
+                {event.ticket.description}
               </div>
-            )
-          })}
-
-          <div className="rounded-lg bg-gray-50 p-4 space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-600">Subtotal</span>
-              <span>${subtotal}</span>
             </div>
 
-            <div className="flex justify-between">
-              <span className="text-gray-600">Booking fee</span>
-              <span>${fees}</span>
-            </div>
-
-            <div className="border-t pt-2 flex justify-between font-semibold">
-              <span>Total</span>
-              <span>${total}</span>
+            <div className="text-right">
+              <div className="font-semibold">x{qty}</div>
+              <div className="text-sm">
+                {money(event.ticket.price)}
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+
+        <div className="mt-4 text-sm space-y-1">
+          <div className="flex justify-between">
+            <span>Subtotal</span>
+            <span>{money(subtotal)}</span>
+          </div>
+          <div className="flex justify-between">
+            <span>Booking fee</span>
+            <span>{money(fee)}</span>
+          </div>
+          <div className="flex justify-between border-t pt-2 font-semibold">
+            <span>Total</span>
+            <span>{money(total)}</span>
+          </div>
+        </div>
+
+        <button
+          className="mt-5 w-full rounded-md bg-green-600 py-3 text-white font-medium"
+          onClick={() =>
+            router.push(
+              isFree
+                ? "/checkout/success"
+                : `/checkout/payment?event=${slug}&qty=${qty}`
+            )
+          }
+        >
+          {isFree ? "Confirm booking" : "Proceed to payment"}
+        </button>
       </div>
     </main>
-  )
+  );
 }
