@@ -1,22 +1,29 @@
-import Link from "next/link"
+import { events } from "@/data/events"
+import EventListCard from "@/components/EventListCard"
 
 export default function EventsPage() {
   return (
-    <main className="min-h-screen bg-gray-100 flex justify-center">
-      <div className="w-full max-w-md bg-white min-h-screen px-5 py-6">
-        <h1 className="text-xl font-semibold mb-4">All events</h1>
+    <main className="bg-gray-50 min-h-screen py-20">
+      <div className="mx-auto max-w-6xl px-6">
+        <h1 className="text-3xl font-bold">Find events</h1>
+        <p className="mt-2 text-gray-600">
+          Discover events happening across New Zealand.
+        </p>
 
-        <ul className="space-y-4">
-          <li>
-            <Link
-              href="/events/arijit-singh-auckland"
-              className="block rounded-lg border p-4 hover:bg-gray-50"
-            >
-              <h2 className="font-medium">Arijit Singh Live in Auckland</h2>
-              <p className="text-sm text-gray-600">12 Feb 2026 · Auckland</p>
-            </Link>
-          </li>
-        </ul>
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {events.map((event) => (
+            <EventListCard
+              key={event.id}
+              slug={event.slug}
+              title={event.title}
+              date={event.date}
+              location={event.location}
+              priceLabel={
+                event.price === 0 ? "Free" : `From $${event.price}`
+              }
+            />
+          ))}
+        </div>
       </div>
     </main>
   )

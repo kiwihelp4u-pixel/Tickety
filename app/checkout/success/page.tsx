@@ -1,17 +1,26 @@
-import Link from "next/link"
+"use client";
+
+import { useSearchParams } from "next/navigation";
 
 export default function SuccessPage() {
+  const params = useSearchParams();
+  const qty = params.get("qty");
+
   return (
-    <main className="min-h-screen bg-gray-100 flex justify-center">
-      <div className="w-full max-w-md bg-white min-h-screen px-5 py-10 space-y-4">
-        <h1 className="text-xl font-semibold">Payment successful</h1>
-        <p className="text-sm text-gray-600">
-          This is a placeholder. Next we will generate tickets and send email.
+    <main className="mx-auto max-w-md p-6 text-center">
+      <div className="rounded-xl bg-white p-6 shadow">
+        <h1 className="text-xl font-semibold text-green-600">
+          Order confirmed
+        </h1>
+
+        <p className="mt-2 text-sm text-gray-600">
+          {qty} ticket(s) successfully booked.
         </p>
-        <Link className="text-sm underline" href="/">
-          Back to home
-        </Link>
+
+        <p className="mt-4 text-xs text-gray-500">
+          A confirmation email will be sent shortly.
+        </p>
       </div>
     </main>
-  )
+  );
 }

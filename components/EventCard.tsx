@@ -1,65 +1,61 @@
-import Link from "next/link"
+"use client";
+
+import TicketSelector from "@/components/TicketSelector";
 
 type TicketType = {
-  id: string
-  name: string
-  description: string
-  price: number
-  maxPerOrder: number
-  remaining: number
-}
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  maxPerOrder: number;
+  remaining: number;
+};
 
-type EventCardProps = {
-  slug: string
-  title: string
-  location: string
-  date: string
-  tickets?: TicketType[] // optional, defensive
-}
+type Props = {
+  slug: string;
+  title: string;
+  location: string;
+  date: string;
+  tickets: TicketType[];
+  quantity: number;
+  onQuantityChange: (qty: number) => void;
+};
 
 export default function EventCard({
-  slug,
   title,
   location,
   date,
-  tickets = [],
-}: EventCardProps) {
-  const lowestPrice =
-    tickets.length > 0
-      ? Math.min(...tickets.map((t) => t.price))
-      : null
+  tickets,
+  quantity,
+  onQuantityChange,
+}: Props) {
+  const ticket = tickets[0];
 
   return (
-    <Link
-      href={{
-        pathname: "/checkout",
-        query: {
-          title,
-          date,
-          tickets: JSON.stringify(tickets),
-        },
-      }}
-      className="block"
-    >
-      <div className="rounded-2xl bg-white shadow-sm overflow-hidden">
-        <div className="h-40 bg-gray-200" />
+    <div className="mx-auto max-w-md rounded-xl bg-white p-5 shadow">
+      <h1 className="text-xl font-semibold">{title}</h1>
+      <p className="mt-1 text-sm text-gray-600">
+        {date} · {location}
+      </p>
 
-        <div className="p-4 space-y-1">
-          <h2 className="text-sm font-semibold leading-snug">
-            {title}
-          </h2>
+      <div className="mt-6 rounded-lg border p-4">
+        <TicketSelector
+          price={ticket.price}
+          quantity={quantity}
+          onChange={(val) =>
+            onQuantityChange(
+              Math.min(
+                Math.max(val, 0),
+                Math.min(ticket.maxPerOrder, ticket.remaining)
+              )
+            )
+          }
+        />
 
-          <p className="text-xs text-gray-600">
-            {location} · {date}
-          </p>
-
-          {lowestPrice !== null && (
-            <p className="text-sm font-medium text-gray-900 pt-1">
-              From ${lowestPrice}
-            </p>
-          )}
+        <div className="mt-2 text-xs text-gray-500">
+          {ticket.remaining} left · max {ticket.maxPerOrder} per order
         </div>
       </div>
-    </Link>
-  )
+    </div>
+  );
 }

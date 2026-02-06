@@ -1,60 +1,17 @@
 import Link from "next/link";
 import HowItWorks from "@/components/HowItWorks";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import WhyTickety from "@/components/WhyTickety";
-import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
     <main className="bg-white text-gray-900">
-      {/* HEADER */}
-      <header className="border-b">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3">
-            <img
-              src="/images/tickety-logo.png"
-              alt="Tickety"
-              className="h-16 w-auto"
-            />
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-8 text-sm text-gray-700">
-            <Link href="/how-it-works">How it works</Link>
-            <Link href="/benefits">Benefits</Link>
-            <Link href="/faq">FAQ</Link>
-          </nav>
-
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="text-sm text-gray-700">
-              Login / Sign Up
-            </Link>
-            <Link
-              href="/organiser"
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              Create Event
-            </Link>
-            <Link
-              href="/events"
-              className="border px-4 py-2 rounded-lg text-sm font-medium"
-            >
-              Find Events
-            </Link>
-          </div>
-        </div>
-      </header>
-
       {/* HERO */}
       <section className="bg-gradient-to-b from-[#0B132B] to-[#0F1C3F] text-white">
         <div className="max-w-6xl mx-auto px-6 py-28 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold">
-            Ready to get started?
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold">Ready to get started?</h1>
 
           <p className="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">
-            Join hundreds of New Zealand event organisers who trust Tickety
-            to handle their ticketing.
+            Join hundreds of New Zealand event organisers who trust Tickety to handle their
+            ticketing.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
@@ -73,21 +30,19 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p className="mt-4 text-sm text-gray-400">
-            No credit card required to list your first event.
-          </p>
+          <p className="mt-4 text-sm text-gray-400">No credit card required to list your first event.</p>
         </div>
       </section>
 
-      {/* HOW IT WORKS (WITH TOGGLE) */}
-      <HowItWorks />
+      {/* HOW IT WORKS */}
+      <section id="how-it-works">
+        <HowItWorks />
+      </section>
 
       {/* WHY CHOOSE */}
-      <section className="py-24">
+      <section id="benefits" className="py-24">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center">
-            Why choose Tickety
-          </h2>
+          <h2 className="text-3xl font-bold text-center">Why choose Tickety</h2>
 
           <p className="text-center text-gray-600 mt-2">
             Built with simplicity in mind. Everything you need, nothing you do not.
@@ -114,15 +69,11 @@ export default function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 bg-gray-50">
+      <section id="faq" className="py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center">
-            Frequently asked questions
-          </h2>
+          <h2 className="text-3xl font-bold text-center">Frequently asked questions</h2>
 
-          <p className="text-center text-gray-600 mt-2">
-            Quick answers to common questions.
-          </p>
+          <p className="text-center text-gray-600 mt-2">Quick answers to common questions.</p>
 
           <div className="mt-12 space-y-4">
             {[
@@ -138,30 +89,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <footer className="border-t py-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
-          <div className="flex items-center gap-2">
-            <img
-              src="/images/tickety-logo.png"
-              alt="Tickety"
-              className="h-12 w-auto"
-            />
-            <span>© 2026 Tickety</span>
-          </div>
-
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <Link href="/terms">Terms</Link>
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/contact">Contact</Link>
-          </div>
-
-          <div className="mt-4 md:mt-0">
-            Made in New Zealand
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
