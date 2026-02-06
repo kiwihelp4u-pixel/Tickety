@@ -1,10 +1,4 @@
 import "./globals.css"
-import type { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Tickety",
-  description: "Simple event ticketing for New Zealand",
-}
 
 export default function RootLayout({
   children,
@@ -13,9 +7,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   )
 }
