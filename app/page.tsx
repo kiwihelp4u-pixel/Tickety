@@ -209,16 +209,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/** FOOTER **/}
       <footer className="border-t py-10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-500">
           <div className="flex items-center gap-2">
             <img
-              src="/images/Tickety logo.png"
+              src="/images/tickety-logo.png"
               alt="Tickety"
-              className="h-6 w-auto"
+              className="h-12 w-auto"
             />
-            <span>© 2026 Tickety</span>
+            <span>© 2026 </span>
           </div>
 
           <div className="flex gap-6 mt-4 md:mt-0">
