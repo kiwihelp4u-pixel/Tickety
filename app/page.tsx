@@ -10,7 +10,7 @@ export default function HomePage() {
             Ready to get started?
           </h1>
           <p className="mt-4 text-lg text-gray-300">
-            Join hundreds of New Zealand event organisers who trust Tikkit
+            Join hundreds of New Zealand event organisers who trust Tickety
             to handle their ticketing.
           </p>
 
@@ -39,7 +39,7 @@ export default function HomePage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center">
-            How Tikkit works
+            How Tickety works
           </h2>
           <p className="text-center text-gray-600 mt-2">
             Whether you are organising an event or looking for tickets,
@@ -84,7 +84,7 @@ export default function HomePage() {
       <section className="py-20">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center">
-            Why choose Tikkit
+            Why choose Tickety
           </h2>
           <p className="text-center text-gray-600 mt-2">
             Built with simplicity in mind. Everything you need,
@@ -142,7 +142,7 @@ export default function HomePage() {
 
           <div className="mt-10 space-y-4">
             {[
-              "Is Tikkit free to list events?",
+              "Is Tickety free to list events?",
               "How do payments work?",
               "Are refunds allowed?",
               "Can I use this for community events?",
@@ -160,7 +160,8 @@ export default function HomePage() {
 
       {/* FOOTER */}
       <footer className="py-8 text-center text-sm text-gray-500">
-        © 2026 Tikkit. All rights reserved. Made in New Zealand
+        © 2026 Tickety. All rights reserved. Made in New Zealand
+        Powered by Webfitt.com
       </footer>
     </main>
   )
